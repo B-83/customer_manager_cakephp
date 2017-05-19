@@ -1,0 +1,112 @@
+/* ----------------------------全体レイアウト---------------------------- */
+
+/* タイトルバーのユーザーメニュー */
+.user-address {
+	margin-left: auto;
+}
+.user-address:hover, .user-address:focus {
+	text-decoration: none;
+}
+.dropdown-menu {
+	left: auto;
+	right: 0;
+	margin: 0;
+}
+
+
+/* タイトルバーの高さ分bodyを下に */
+body {
+  padding-top: 50px;
+}
+
+
+/* サイドバー */
+.sidebar {
+  border-right: 1px solid #eee;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  padding: 20px 0;
+  position: fixed;
+  top: 51px;
+  z-index: 1000;
+}
+.sidebar {
+  padding-right: 0;
+  padding-left: 0;
+}
+.sidebar .nav {
+  margin-bottom: 20px;
+}
+.sidebar .nav-item {
+  width: 100%;
+}
+.sidebar .nav-item + .nav-item {
+  margin-left: 0;
+}
+.sidebar .nav-link {
+  border-radius: 0;
+}
+
+
+/* アコーディオン */
+#accordion {
+	padding-bottom: 8px;
+}
+/* アコーディオンヘッダー */
+.card-header-sm {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.3rem 1.25rem;
+    background-color: #f7f7f9;
+}
+/* アコーディオンボディ */
+.card-block-sm {
+	padding: 8px 20px;
+}
+.card-block-sm-index {
+	padding: 8px 20px;
+}
+
+
+/* テーブル */
+.table-responsive {
+	box-sizing: content-box;
+	transition: height 0.35s ease;
+}
+.table-cover {
+	box-sizing: content-box;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+
+/* ページネーション */
+a.page-link {
+	padding: 0.3rem 0.75rem;
+}
+a.page-link {
+	margin-top: 10px;
+}
+
+
+/* ダイアログ */
+.modal-body-admin {
+	height: 220px;
+}
+.modal-middle {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.modal-middle input {
+	width: 400px;
+}
+
+
+/* 顧客詳細ページの削除ダイアログ */
+.customer-span {
+	display: inline-block;
+	width: 60px;
+}
