@@ -16,43 +16,43 @@
 		  <div class="form-group-sm row">
 			<label for="name" class="col-2 col-form-label">顧客名称</label>
 			<div class="col-10">
-			  <?=$this->Form->text('name', ['id'=>'name', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('name', ['default'=>$conditions['name'], 'id' => 'name', 'class' => 'form-control']) ?>
 			  <div id="name_suggest" class="suggest" style="display: none;"></div>
 			</div>
 		  </div>
 		  <div class="form-group-sm row">
 			<label for="kana" class="col-2 col-form-label">顧客名称（かな）</label>
 			<div class="col-10">
-			  <?=$this->Form->text('kana', ['id'=>'kana', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('kana', ['default' => $conditions['kana'], 'id' => 'kana', 'class' => 'form-control']) ?>
 			  <div id="kana_suggest" class="suggest" style="display: none;"></div>
 			</div>
 		  </div>
 		  <div class="form-group-sm row">
 			<label for="postalCode" class="col-2 col-form-label">郵便番号<small>&emsp;※半角数字</small></label>
 			<div class="col-2">
-			  <?=$this->Form->text('postal_code', ['id'=>'postal_code', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('postal_code', ['default' => $conditions['postal_code'], 'id' => 'postal_code', 'class' => 'form-control']) ?>
 			</div>
 		  </div>
 		  <div class="form-group-sm row">
 			<label for="address1" class="col-2 col-form-label">住所1</label>
 			<div class="col-2">
-			  <?=$this->Form->select('address1', $states, ['empty'=>'都道府県選択', 'id'=>'address1', 'class'=>'search-select']) ?>
+			  <?=$this->Form->select('address1', $states, ['empty' => '都道府県選択', 'default' => $conditions['address1'], 'id' => 'address1', 'class' => 'search-select']) ?>
 			</div>
 			<div class="col-1"></div>
 			<label for="address2" class="col-2 col-form-label">住所2</label>
 			<div class="col-5">
-			  <?=$this->Form->text('address2', ['id'=>'address2', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('address2', ['default' => $conditions['address2'], 'id' => 'address2', 'class' => 'form-control']) ?>
 			</div>
 		  </div>
 		  <div class="form-group-sm row">
 			<label for="tel" class="col-2 col-form-label">電話番号<small>&emsp;※半角数字</small></label>
 			<div class="col-2">
-			  <?=$this->Form->text('tel', ['id'=>'tel', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('tel', ['default' => $conditions['tel'], 'id' => 'tel', 'class' => 'form-control']) ?>
 			</div>
 			<div class="col-1"></div>
 			<label for="fax" class="col-2 col-form-label">FAX番号<small>&emsp;※半角数字</small></label>
 			<div class="col-2">
-			  <?=$this->Form->text('fax', ['id'=>'fax', 'class'=>'form-control']) ?>
+			  <?=$this->Form->text('fax', ['default' => $conditions['fax'], 'id' => 'fax', 'class' => 'form-control']) ?>
 			</div>
 		  </div>
 		</form>
@@ -79,12 +79,12 @@
 		</thead>
 		<tbody>
     	  <?php foreach ($customers as $customer): ?>
-		  <?=$this->Html->tableCells([$customer->id,
-			$this->Html->link($customer->name, '/customers/detail?id='.$customer->id),
-			$customer->kana, $customer->postal_code, $customer->address1.$customer->address2,
-			$customer->tel, $customer->fax, $customer->tax_type, $customer->rounding_type,
-			$customer->closing_day, $customer->created, $customer->updated]); ?>
-		  <?php endforeach; ?>
+			<?=$this->Html->tableCells([$customer->id,
+			  $this->Html->link($customer->name, '/customers/detail?id='.$customer->id),
+			  $customer->kana, $customer->postal_code, $customer->address1.$customer->address2,
+			  $customer->tel, $customer->fax, $customer->tax_type, $customer->rounding_type,
+			  $customer->closing_day . '日', $customer->created, $customer->updated]); ?>
+			<?php endforeach; ?>
     	</tbody>
 	  </table>
 	</div>
