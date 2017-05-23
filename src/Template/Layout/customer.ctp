@@ -63,13 +63,6 @@
 	echo $this->Html->script('tether');
 	echo $this->Html->script('bootstrap');
 	echo $this->Html->script('table_size');
-	echo $this->Html->script('suggest');
-	echo $this->Html->script('suggest_customer');
-	echo $this->Html->script('form_delete');
-	echo $this->Html->script('search');
-	echo $this->Html->script('auto_address');
-	echo $this->Html->script('saved_catch');
-	echo $this->Html->script('form_action_change');
 	?>
 </body>
 </html>

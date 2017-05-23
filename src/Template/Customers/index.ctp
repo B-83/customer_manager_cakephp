@@ -105,3 +105,10 @@
 	  </ul>
 	</div>
 </main>
+
+<?php
+	echo $this->Html->script('suggest');
+	echo $this->Html->script('suggest_customer');
+	echo $this->Html->script('form_delete');
+	echo $this->Html->script('search');
+?>

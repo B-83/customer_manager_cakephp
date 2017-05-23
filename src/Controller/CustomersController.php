@@ -4,6 +4,8 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\Error\Debugger;
 use App\Model\Entity\Customer;
+use App\Model\Table\CustomersTable;
+use Cake\ORM\ResultSet;
 
 class CustomersController extends AppController {
 
@@ -30,7 +32,7 @@ class CustomersController extends AppController {
 	}
 
 	/**
-	 * index method
+	 * index 画面表示
 	 *
 	 */
 	public function index() {
@@ -65,10 +67,8 @@ class CustomersController extends AppController {
 		$customers = $this->paginate($customers);
 
 		// 顧客情報を表示用に変換してセット
-		foreach ($customers as $customer) {
-			$this->_customerConvert($customer);
-		}
-		$this->set("customers", $customers);
+		$convertCustomers = $this->_convertCustomers($customers);
+		$this->set("customers", $convertCustomers);
 	}
 
 	/**
@@ -112,7 +112,10 @@ class CustomersController extends AppController {
 
 	}
 
-
+	/**
+	 * entry 画面表示
+	 *
+	 */
 	public function entry() {
 
 		// 都道府県を取得してセット
@@ -121,26 +124,58 @@ class CustomersController extends AppController {
 
 		// 新規顧客情報をセット
 		$customer = $this->Customers->newEntity();
+		$customer->set("id", "new");
 		$this->set("customer", $customer);
+
+		// 税区分をセット
+		$this->set("taxTypes", $this->taxTypes);
+		// 丸め方法をセット
+		$this->set("roundingTypes", $this->roundingTypes);
+		// 締め日をセット
+		$this->set("closingDays", $this->closingDays);
 	}
 
-	// TODO やらないといけないこと
-	// FIXME 注意的なイメージ
+	/**
+	 * edit 画面表示
+	 *
+	 */
 	public function edit() {
 
 	}
 
+	/**
+	 * バリデーションチェック 確認画面前リダイレクト
+	 * @return \Cake\Http\Response|NULL
+	 */
+	public function clearOrError() {
 
-	public function check() {
+		$this->autoRender = false;
+		$customer = $this->Customers->newEntity($this->request->getData('entry'));
 
+		if($customer->errors()) {
+			return $this->redirect(['controller' => 'Customers', 'action' => '/customers/check/' . $id]);
+		} else {
+			if ($id === 'new') {
+				return $this->redirect(['controller' => 'Customers', 'action' => '/customers/entry']);
+			} else {
+				return $this->redirect(['controller' => 'Customers', 'action' => '/customers/edit/' . $id]);
+			}
+		}
 	}
 
+	/**
+	 * check 画面表示
+	 */
+	public function check() {
+
+
+	}
 
 	/**
 	 * 顧客情報変換メソッド
 	 * @param Customer $customer
 	 */
-	private function _customerConvert(Customer $customer) {
+	private function _convertCustomer(Customer $customer) {
 
 		// 郵便番号
 		if ($customer->postal_code) {
@@ -163,10 +198,10 @@ class CustomersController extends AppController {
 		// 丸め方法
 		switch ($customer->rounding_type) {
 			case 1:
-				$customer->rounding_type = '領収書';
+				$customer->rounding_type = '明細行';
 				break;
 			case 2:
-				$customer->rounding_type = '明細行';
+				$customer->rounding_type = '請求書';
 				break;
 		}
 
@@ -175,6 +210,19 @@ class CustomersController extends AppController {
 
 		// 更新日時
 		$customer->updated = $customer->updated->i18nFormat('yyyy年MM月dd日 kk時mm分');
+	}
+
+	/**
+	 * まとめて顧客情報変換メソッド
+	 * @param ResultSet $customers
+	 * @return \Cake\ORM\ResultSet
+	 */
+	private function _convertCustomers(ResultSet $customers) {
+
+		foreach ($customers as $customer) {
+			$this->_convertCustomer($customer);
+		}
+		return $customers;
 	}
 
 	/**
@@ -191,4 +239,27 @@ class CustomersController extends AppController {
 		}
 		return $states;
 	}
+
+	// 税区分
+	private $taxTypes = [
+		'1' => '切捨て',
+		'2' => '四捨五入',
+		'3' => '切上げ'
+	];
+
+	// 丸め方法
+	private $roundingTypes = [
+		'1' => '明細行',
+		'2' => '請求書'
+	];
+
+	// 締め日
+	private $closingDays = [
+		'5' => '5日',
+		'10' => '10日',
+		'15' => '15日',
+		'20' => '20日',
+		'25' => '25日',
+		'31' => '31日',
+	];
 }

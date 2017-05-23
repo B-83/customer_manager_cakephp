@@ -1,8 +1,3 @@
-<!-- script取り込み漏れの確認 -->
-
-
-
-
 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 
 <!-- テーブル -->
@@ -88,3 +83,7 @@
       </table>
     </div>
 </main>
+
+<?php
+echo $this->Html->script('form_action_change');
+?>

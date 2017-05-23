@@ -1,8 +1,3 @@
-<!-- script取り込み漏れの確認 -->
-
-
-
-
 <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
 
 <!-- テーブル -->
@@ -68,8 +63,6 @@
     <button class="btn btn-info btn-right" onclick="location.href='/payment/search'">入金一覧へ</button>
     <span class="customer-button-explain">この顧客の</span>
 </main>
-  </div>
-</div>
 
 <!-- 登録・編集完了ダイアログ -->
 <div class="modal fade" id="customer-entry-edit-finish" tabindex="-1" role="dialog" aria-labelledby="customerEntryEditFinishLabel" aria-hidden="true">
@@ -135,11 +128,6 @@
  	</div>
 </div>
 
-	<!-- スクリプト -->
-	<script src="/js/jquery-3.1.1.js"></script>
-	<script src="/js/tether.js"></script>
-	<script src="/js/bootstrap.js"></script>
-	<script src="/js/table_size.js"></script>
-	<script src="/js/saved_catch.js"></script>
-</body>
-</html>
+<?php
+	echo $this->Html->script('saved_catch');
+?>
