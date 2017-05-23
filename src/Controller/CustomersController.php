@@ -124,6 +124,9 @@ class CustomersController extends AppController {
 
 		// 新規顧客情報をセット
 		$customer = $this->Customers->newEntity();
+		if ($this->request->getParam('customer')) {
+			$customer = $this->request->getParam('customer');
+		}
 		$customer->set("id", "new");
 		$this->set("customer", $customer);
 
@@ -136,29 +139,38 @@ class CustomersController extends AppController {
 	}
 
 	/**
-	 * edit 画面表示
-	 *
-	 */
-	public function edit() {
-
-	}
-
-	/**
-	 * バリデーションチェック 確認画面前リダイレクト
+	 * バリデーションチェック リダイレクト
 	 * @return \Cake\Http\Response|NULL
 	 */
 	public function clearOrError() {
 
 		$this->autoRender = false;
-		$customer = $this->Customers->newEntity($this->request->getData('entry'));
 
-		if($customer->errors()) {
-			return $this->redirect(['controller' => 'Customers', 'action' => '/customers/check/' . $id]);
+		$customer = $this->Customers->newEntity();
+		$customer->set('id', $this->request->getData('id'));
+		$customer->set('name', $this->request->getData('name'));
+		$customer->set('kana', $this->request->getData('kana'));
+		$customer->set('postal_code', $this->request->getData('postal_code'));
+		$customer->set('address1', $this->request->getData('address1'));
+		$customer->set('address2', $this->request->getData('address2'));
+		$customer->set('tax_type', $this->request->getData('tax_type'));
+		$customer->set('rounding_type', $this->request->getData('rounding_type'));
+		$customer->set('closing_day', $this->request->getData('closing_day'));
+
+		// FIXME バリデーション効いてない
+		echo $customer->errors();
+
+		// バリデーションエラーがなかった場合
+		if(empty($customer->errors())) {
+			return $this->redirect(['controller' => 'Customers', 'action' => '/check/' . $customer->get("id")]);
 		} else {
+			// 登録でバリデーションエラーがあった場合
 			if ($id === 'new') {
-				return $this->redirect(['controller' => 'Customers', 'action' => '/customers/entry']);
+				return $this->redirect(['controller' => 'Customers', 'action' => '/entry', 'customer' => $customer]);
+
+			// 編集でバリデーションエラーがあった場合
 			} else {
-				return $this->redirect(['controller' => 'Customers', 'action' => '/customers/edit/' . $id]);
+				return $this->redirect(['controller' => 'Customers', 'action' => '/edit/' . $customer->get("id")]);
 			}
 		}
 	}
@@ -168,7 +180,11 @@ class CustomersController extends AppController {
 	 */
 	public function check() {
 
-
+		echo 'check page';
+		// 顧客情報をセット
+// 		$customer = $this->request->getData('customer');
+// 		$customer->set("id", "new");
+// 		$this->set("customer", $customer);
 	}
 
 	/**
